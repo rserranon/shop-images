@@ -11,10 +11,20 @@ function ContextProvider (props) {
             .then(data => setAllPhotos(data))
     }, [])
 
+    function toggleFavorite (id) {
+        const updatedArr = allPhotos.map ( photo => {
+            if (photo.id === id) {
+                return { ...photo, isFavorite: !photo.isFavorite}
+            }
+            return photo
+        })
+        setAllPhotos(updatedArr)
+    }
+
     // Esta función asegura que una vez que envolvamos nuestra app con el
     // ContextProvider, se haga el render de los componentes internos (children)
     return (
-        <Context.Provider value={{allPhotos}}>
+        <Context.Provider value={{allPhotos, toggleFavorite}}>
             {props.children}
         </Context.Provider>
     )
